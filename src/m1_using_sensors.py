@@ -3,8 +3,8 @@ This module lets you practice the use of robot sensors.
 
 Authors: David Mutchler, Vibha Alangar, Matt Boutell, Dave Fisher,
          Mark Hays, Amanda Stouder, Aaron Wilkin, their colleagues,
-         and PUT_YOUR_NAME_HERE.
-"""  # TODO: 1. PUT YOUR NAME IN THE ABOVE LINE.
+         and Zhicheng Kai.
+"""  # DO: 1. PUT YOUR NAME IN THE ABOVE LINE.
 
 import ev3dev.ev3 as ev3
 import time
@@ -28,7 +28,7 @@ def main():
     # run_test_beep_and_tone()
     # run_test_go_straight_for_seconds()
     # run_test_go_straight_for_inches_using_time()
-    # run_test_go_straight_for_inches_using_sensor()
+    run_test_go_straight_for_inches_using_sensor()
     # run_test_raise_arm()
     # run_test_lower_arm()
     # run_test_go_straight_until_black()
@@ -42,8 +42,16 @@ def run_test_beep_and_tone():
        -- beep method of the Beeper    class
        -- tone method of the ToneMaker class
     """
+    # b = Beeper()
+    # for k in range(10):
+    #     b.beep()
+    #     b.beep().wait()
+    t = ToneMaker()
+    for k in range(10):
+        t.tone(300*(k+1),100).wait()
+
     # -------------------------------------------------------------------------
-    # TODO: 4.  Implement and test this method.
+    # DO: 4.  Implement and test this method.
     # -------------------------------------------------------------------------
     # IMPORTANT:
     #   For testing the   beep   method,
@@ -355,6 +363,14 @@ class DriveSystem(object):
         self.go_straight_for_seconds(seconds, speed)
 
     def go_straight_for_inches_using_sensor(self, inches, speed):
+        # self.go(speed,speed)
+        if InfraredProximitySensor.get_distance(inches) <= abs(inches):
+        #     self.stop()
+        while True:
+            self.go(speed,speed)
+            if InfraredProximitySensor(inches) <= abs(inches):
+                self.stop()
+                break
         pass
         # Live code this with students
 
@@ -386,8 +402,9 @@ class DriveSystem(object):
 #   -- Motor
 #   -- TouchSensor
 #   -- ColorSensor
-#   -- IR_DistanceSensor
-#   --
+#   -- InferaredProximitySensor
+#   --Beeper
+#   --Tonemaker
 # USE them, but do NOT modify them.
 ###############################################################################
 class Motor(object):
